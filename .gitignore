@@ -4,9 +4,18 @@
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
+/config/packages/prod/doctrine.yaml
+/config/packages/test/twig.yaml
+/config/packages/doctrine_migrations.yaml
+/config/packages/doctrine.yaml
+/config/packages/sensio_framework_extra.yaml
+/config/packages/twig.yaml
+/config/bundles.php
 /public/bundles/
 /var/
 /vendor/
+symfony.lock
+composer.lock
 ###< symfony/framework-bundle ###
 
 ###> symfony/web-server-bundle ###
