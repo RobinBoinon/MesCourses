@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ListController
+class ListController extends AbstractController
 {
     /**
       * @Route("/maliste")
@@ -14,8 +15,8 @@ class ListController
     {
         $number = random_int(0, 100);
 
-        return new Response(
-            '<html><body>Lucky number: '.$number.'</body></html>'
-        );
+        return $this->render('list/malist.html.twig', [
+            'number' => $number,
+        ]);
     }
 }
