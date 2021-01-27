@@ -1,0 +1,60 @@
+<div id="screenShadow" class="screenShadow"></div>
+
+<div id="PopupYesNo" class="PopupYesNo">
+  <div class="PopupYesNoText">
+    <span id="PopupYesNoTextSpan">Texte</span>
+  </div>
+  <div>
+    <input type="button" value="Annuler" onclick="HidePopupNewList()">
+    <input type="button" value="Confirmer" onclick="CreateNewList()">
+  </div>
+</div>
+
+<div class="backgroundMain"></div>
+
+<div class="mainContentContainer">
+    {{ form_start(form) }}
+        <div class="addform">
+          <div class="formrow">
+              <div class="formcolfield">
+                  {{ form_row(form.name) }}
+              </div>
+              <div class="formcolsubmit">
+                  {{ form_row(form.add) }}
+              </div>
+          </div>
+        </div>
+    {{ form_end(form) }}
+
+    <div class="currentlist widthcontent">
+        {% for listsproduct in listsproducts %}
+            <div class="listproductrow">
+                {{ listsproduct.product.name }}
+            <span> | </span>
+                {{ listsproduct.quantity }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="buttonnewlist widthcontent">
+        <input type="button" value="Nouvelle Liste" onclick="showPopupNewList()">
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="/js/mylist.js"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/styles.css">
+{% endblock %}
