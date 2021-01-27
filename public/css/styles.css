@@ -1,0 +1,129 @@
+.backgroundMain{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-image: url("/images/background.jpg");
+  z-index: -1;
+}
+
+form,
+.widthcontent{
+  width: 500px;
+  margin: 0 auto;
+}
+
+form{
+  padding-top: 20px;
+}
+
+.mainContentContainer{
+  width: 600px;
+  margin: 0 auto;
+  background-color: white;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.addform{
+  width: 100%;
+}
+
+.formrow{
+  height: 50px;
+  border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px;
+  box-shadow: 10px 5px 5px #999999;
+}
+
+.formcolfield{
+  float: left;
+  padding-top: 14px;
+  text-align: center;
+  display: inline-block;
+}
+
+.formcolfield label{
+  padding-right: 15px;
+}
+
+.buttonnewlist{
+  width: 100%;
+  text-align: center;
+}
+
+.formcolsubmit{
+  float: right;
+  text-align: center;
+  display: inline-block;
+}
+
+button[type=submit]{
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 2px 2px;
+  cursor: pointer;
+}
+
+input[type=button]{
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 2px 2px;
+  cursor: pointer;
+}
+
+.currentlist{
+  width: 100%;
+  margin: 20px 0;
+}
+
+.listproductrow{
+  width: 500px;
+  margin: 0 auto;
+  background-color: red;
+}
+
+.screenShadow{
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: black;
+  opacity: 0.75;
+  z-index: 90;
+}
+
+.PopupYesNo{
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  top: 200px;
+  width: 400px;
+  height: 150px;
+  background-color: white;
+  border-radius: 25px;
+  border: 2px solid #73AD21;
+  text-align: center;
+  z-index: 91;
+}
+
+.PopupYesNoText{
+  height: 30px;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #1C671E;
+}
