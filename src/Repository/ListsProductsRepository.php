@@ -48,4 +48,14 @@ class ListsProductsRepository extends ServiceEntityRepository
           ->getOneOrNullResult()
       ;
     }
+
+    public function findOneByProductId($product_id)
+    {
+      return $this->createQueryBuilder('l')
+          ->andWhere('l.product  = :val2')
+          ->setParameter('val2', $product_id)
+          ->getQuery()
+          ->getOneOrNullResult()
+      ;
+    }
 }

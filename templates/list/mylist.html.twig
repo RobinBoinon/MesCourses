@@ -1,12 +1,14 @@
-<div id="screenShadow" class="screenShadow"></div>
+<div id="screenShadowLoading" class="screenShadowLoading"></div>
+<div id="Loading" class="Loading"><img src="/images/loading.gif"/></div>
 
+<div id="screenShadow" class="screenShadow"></div>
 <div id="PopupYesNo" class="PopupYesNo">
   <div class="PopupYesNoText">
     <span id="PopupYesNoTextSpan">Texte</span>
   </div>
   <div>
-    <input type="button" value="Annuler" onclick="HidePopupNewList()">
-    <input type="button" value="Confirmer" onclick="CreateNewList()">
+    <input type="button" class="otherbutton" value="Annuler" onclick="HidePopupNewList()">
+    <input type="button" class="otherbutton" value="Confirmer" onclick="CreateNewList()">
   </div>
 </div>
 
@@ -26,26 +28,43 @@
         </div>
     {{ form_end(form) }}
 
-    <div class="currentlist widthcontent">
-        {% for listsproduct in listsproducts %}
+    {% if listsproducts|length > 0 %}
+        <div class="currentlist widthcontent">
+            {% set i = 1 %}
+            {% for listsproduct in listsproducts %}
+                <div class="listproductrow {% if i % 2 == 0 %}evenrow{% else %}oddrow{% endif %}{% if i > 1 %} rowBorderTop{% endif %}">
+                    {% if listsproduct.product.ImageLink is null %}
+                      <input type="button" class="rowbutton" value="?" onclick="LoadPopUpImage()">
+                    {% else %}
+                      <div class="productImageDiv">
+                        <img class="productImage" src="{{ listsproduct.product.imageLink }}"/>
+                      </div>
+                    {% endif %}
+                    <div class="rowProductName">
+                      {{ listsproduct.product.name }}
+                    </div>
+                    <div class="deleteRow" onclick="deleteProductFromCurrentList({{ listsproduct.product.id }})"><i class="fas fa-trash-alt"></i></div>
+                    <div class="quantityHandlerContainer">
+                      <div class="quantityMinus" onclick="quantityMinus({{ listsproduct.product.id }})">-</div
+                      ><div class="quantityNumber" id="quantityNumber_{{ listsproduct.product.id }}">{{ listsproduct.quantity }}</div
+                      ><div class="quantityPlus" onclick="quantityPlus({{ listsproduct.product.id }})">+</div>
+                    </div>
+                </div>
+                {% set i = i+1 %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="currentlist widthcontent">
             <div class="listproductrow">
-                {{ listsproduct.product.name }}
-            <span> | </span>
-                {{ listsproduct.quantity }}
+                <div class="EmptyList">Aucun produit</div>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endif %}
 
     <div class="buttonnewlist widthcontent">
-        <input type="button" value="Nouvelle Liste" onclick="showPopupNewList()">
+        <input type="button" class="otherbutton" value="Nouvelle Liste" onclick="showPopupNewList()">
     </div>
 </div>
-
-
-
-
-
-
 
 
 
@@ -57,4 +76,5 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.css">
 {% endblock %}

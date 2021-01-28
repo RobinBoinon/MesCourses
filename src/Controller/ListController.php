@@ -99,4 +99,62 @@ class ListController extends AbstractController
 
       return $this->redirectToRoute('my_list');
     }
+
+    /**
+      * @Route("/quantityminus", name="quantity_minus")
+    */
+    public function QuantityMinus(): Response
+    {
+      $entityManager = $this->getDoctrine()->getManager();
+      $listsproductsrepository = $this->getDoctrine()->getRepository(ListsProducts::class);
+
+      $productId = $_GET['productId'];
+
+      $myrow = $listsproductsrepository->findOneByProductId($productId);
+      $newquantity = $myrow->getQuantity()-1;
+      $myrow->setQuantity($newquantity);
+      $entityManager->flush();
+
+      if($newquantity == 0){
+        $entityManager->remove($myrow);
+        $entityManager->flush();
+      }
+
+      return $this->json(['newquantity' => $newquantity]);
+    }
+
+    /**
+      * @Route("/quantityplus", name="quantity_plus")
+    */
+    public function QuantityPlus(): Response
+    {
+      $entityManager = $this->getDoctrine()->getManager();
+      $listsproductsrepository = $this->getDoctrine()->getRepository(ListsProducts::class);
+
+      $productId = $_GET['productId'];
+
+      $myrow = $listsproductsrepository->findOneByProductId($productId);
+      $newquantity = $myrow->getQuantity()+1;
+      $myrow->setQuantity($newquantity);
+      $entityManager->flush();
+
+      return $this->json(['newquantity' => $newquantity]);
+    }
+
+    /**
+      * @Route("/deleteproductfromcurrentlist", name="deleteproductfromcurrentlist")
+    */
+    public function DeleteProductFromCurrentList(): Response
+    {
+      $entityManager = $this->getDoctrine()->getManager();
+      $listsproductsrepository = $this->getDoctrine()->getRepository(ListsProducts::class);
+
+      $productId = $_GET['productId'];
+
+      $myrow = $listsproductsrepository->findOneByProductId($productId);
+      $entityManager->remove($myrow);
+      $entityManager->flush();
+
+      return $this->json(['ok' => 1]);
+    }
 }
