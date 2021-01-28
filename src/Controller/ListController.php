@@ -40,7 +40,7 @@ class ListController extends AbstractController
             $datas = $form->getData();
             $name = $datas->getName();
             $product_temp = new Product();
-            $product_temp = $productrepository->findOneByName($name);
+            $product_temp = $productrepository->findOneByName(strtolower($name));
             if(is_null($product_temp)){ //Product doesn't exist in db
               $product_temp = new Product();
               $product_temp->setName($name);
