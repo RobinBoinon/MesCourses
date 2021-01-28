@@ -5,6 +5,11 @@
   left: 0;
   top: 0;
   background-image: url("/images/background.jpg");
+  filter: brightness(50%);
+  -webkit-filter: brightness(50%);
+  -moz-filter: brightness(50%);
+  -o-filter: brightness(50%);
+  -ms-filter: brightness(50%);
   z-index: -1;
 }
 
@@ -21,7 +26,7 @@ form{
 .mainContentContainer{
   width: 600px;
   margin: 0 auto;
-  background-color: white;
+  background-color: #DAFFDB;
   height: 100%;
   border-radius: 5px;
 }
@@ -32,10 +37,11 @@ form{
 
 .formrow{
   height: 50px;
-  border-radius: 25px;
+  /* border-radius: 25px; */
   border: 2px solid #73AD21;
   padding: 20px;
   box-shadow: 10px 5px 5px #999999;
+  background-color: #CFFFD0;
 }
 
 .formcolfield{
@@ -81,14 +87,14 @@ input[type=button]{
 }
 
 .currentlist{
-  width: 100%;
-  margin: 20px 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #73AD21;
 }
 
 .listproductrow{
   width: 500px;
   margin: 0 auto;
-  background-color: red;
 }
 
 .screenShadow{

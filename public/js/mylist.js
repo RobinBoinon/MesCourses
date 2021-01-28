@@ -10,6 +10,5 @@ function HidePopupNewList() {
 }
 
 function CreateNewList() {
-  console.log("CreateNewList");
   location.href = '/newlist';
 }
