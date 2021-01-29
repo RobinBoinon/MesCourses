@@ -79,19 +79,37 @@ input[type=button]{
   cursor: pointer;
 }
 
+.buttonstyle{
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
 .rowbutton{
-  width: 38px;
-  height: 38px;
+  width: 30px;
+  height: 30px;
   padding: 4px;
   text-decoration: none;
   margin: -1px;
   cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  top: -2px;
+}
+
+.icontobecentered{
+  vertical-align: middle;
+  font-size: 20px;
+  padding-top: 6px;
 }
 
 .productImage{
-  width: 38px;
-  height: 38px;
-  margin: -1px;
+  width: 37px;
+  height: 37px;
+  margin: -2px;
+  border: 1px solid #73AD21;
 }
 
 .productImageDiv{
@@ -156,7 +174,7 @@ input[type=button]{
   z-index: 99;
 }
 
-.PopupYesNo{
+.Popup{
   display: none;
   position: absolute;
   left: 0;
@@ -173,17 +191,16 @@ input[type=button]{
   z-index: 91;
 }
 
-.PopupYesNoText{
+.PopupText{
   height: 30px;
   margin-top: 40px;
-  margin-bottom: 15px;
   font-size: 16px;
   color: #1C671E;
 }
 
 .quantityHandlerContainer{
   float: right;
-  margin-top: 7px;
+  margin-top: 5px;
   display: inline-block;
   border:1px solid #73AD21;
   border-radius: 6px;
@@ -289,4 +306,15 @@ input[type=button]{
   text-align: center;
   display: inline-block;
   margin-top: -53px;
+}
+
+.googleImageContainer img{
+  width: 75px;
+  height: 75px;
+  margin: 0px 5px;
+  border: 1px solid #73AD21;
+}
+
+.googleImageContainer{
+  height: 90px;
 }

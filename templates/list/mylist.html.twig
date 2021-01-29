@@ -2,17 +2,16 @@
 <div id="Loading" class="Loading"><img src="/images/loading.gif"/></div>
 
 <div id="screenShadow" class="screenShadow"></div>
-<div id="PopupYesNo" class="PopupYesNo">
-  <div class="PopupYesNoText">
-    <span id="PopupYesNoTextSpan">Texte</span>
+<div id="Popup" class="Popup">
+  <div class="PopupText">
+    <span id="PopupTextSpan">Texte</span>
   </div>
-  <div>
-    <input type="button" class="otherbutton" value="Annuler" onclick="HidePopupNewList()">
-    <input type="button" class="otherbutton" value="Confirmer" onclick="CreateNewList()">
-  </div>
+  <div id="PopupContentDiv"></div>
 </div>
 
 <div class="backgroundMain"></div>
+
+<input type="hidden" id="SelectedProductId" value="">
 
 <div class="mainContentContainer">
     {{ form_start(form) }}
@@ -34,7 +33,7 @@
             {% for listsproduct in listsproducts %}
                 <div class="listproductrow {% if i % 2 == 0 %}evenrow{% else %}oddrow{% endif %}{% if i > 1 %} rowBorderTop{% endif %}">
                     {% if listsproduct.product.ImageLink is null %}
-                      <input type="button" class="rowbutton" value="?" onclick="LoadPopUpImage()">
+                      <div class="rowbutton buttonstyle" onclick="LoadPopUpImage({{ listsproduct.product.id }},'{{ listsproduct.product.name }}')"><i class="fas fa-plus icontobecentered"></i></div>
                     {% else %}
                       <div class="productImageDiv">
                         <img class="productImage" src="{{ listsproduct.product.imageLink }}"/>
@@ -65,6 +64,8 @@
         <input type="button" class="otherbutton" value="Nouvelle Liste" onclick="showPopupNewList()">
     </div>
 </div>
+
+<div id="content"></div>
 
 
 

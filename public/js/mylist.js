@@ -9,14 +9,20 @@ function HideLoading() {
 }
 
 function showPopupNewList() {
-  $("#PopupYesNoTextSpan").html("Voulez-vous vraiment commencer une nouvelle liste ?");
-  $("#screenShadow").show();
-  $("#PopupYesNo").show();
+  $("#PopupTextSpan").html("Voulez-vous vraiment commencer une nouvelle liste ?");
+  $("#PopupContentDiv").html("<input type=\"button\" class=\"otherbutton\" value=\"Annuler\" onclick=\"HidePopup()\"><input type=\"button\" class=\"otherbutton\" value=\"Confirmer\" onclick=\"CreateNewList()\">");
+  showPopup(150);
 }
 
-function HidePopupNewList() {
+function showPopup(height) {
+  $("#Popup").height(height);
+  $("#screenShadow").show();
+  $("#Popup").show();
+}
+
+function HidePopup() {
   $("#screenShadow").hide();
-  $("#PopupYesNo").hide();
+  $("#Popup").hide();
 }
 
 function CreateNewList() {
@@ -72,6 +78,41 @@ function deleteProductFromCurrentList(productId) {
   .fail(function (jqXHR, textStatus, errorThrown) {});
 }
 
-function LoadPopUpImage() {
-  console.log("LoadPopUpImage");
+function LoadPopUpImage(productId,productName) {
+  ShowLoading();
+  var imageNumber = 3;
+  $.ajax({
+    url: '/findgoogleimage',
+    type: 'GET',
+    data: "productName="+productName,
+    datatype: 'json'
+  })
+  .done(function (data) {
+    $("#PopupTextSpan").html("Choisissez une image pour le produit : "+productName);
+    var html = "<div class=\"googleImageContainer\">";
+    for ($i = 2; $i <= imageNumber+1; $i++) {
+        html += "<img onclick=\"DefineImageForProduct("+productId+",\'"+data[$i]+"\')\" src=\""+data[$i]+"\"/>";
+    }
+    html += "</div>";
+    html += "<input type=\"button\" class=\"otherbutton\" value=\"Annuler\" onclick=\"HidePopup()\">";
+    $("#PopupContentDiv").html(html);
+    showPopup(220);
+    HideLoading();
+  })
+  .fail(function (jqXHR, textStatus, errorThrown) {});
+}
+
+function DefineImageForProduct(productId,imageLink) {
+  console.log("trucS");
+  ShowLoading();
+  $.ajax({
+    url: '/defineimageforproduct',
+    type: 'GET',
+    data: "productId="+productId+'&imageLink='+imageLink,
+    datatype: 'json'
+  })
+  .done(function (data) {
+    location.href = '/maliste';
+  })
+  .fail(function (jqXHR, textStatus, errorThrown) {});
 }

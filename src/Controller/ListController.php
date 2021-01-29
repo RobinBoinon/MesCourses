@@ -157,4 +157,41 @@ class ListController extends AbstractController
 
       return $this->json(['ok' => 1]);
     }
+
+    /**
+      * @Route("/findgoogleimage", name="findgoogleimage")
+    */
+    public function FindGoogleImage(): Response
+    {
+      $url = 'https://www.google.com/search?q='.$_GET['productName'].'&tbm=isch';
+      $googlehtml = file_get_contents($url);
+      $srcs = explode("src=\"", $googlehtml);
+      $return = array();
+      $i = 0;
+      foreach ($srcs as $src) {
+          $temp = explode("\"", $src);
+          $return[$i] = $temp[0];
+          $i++;
+      }
+
+      return $this->json($return);
+    }
+
+    /**
+      * @Route("/defineimageforproduct", name="defineimageforproduct")
+    */
+    public function DefineImageForProduct(): Response
+    {
+      $entityManager = $this->getDoctrine()->getManager();
+      $productsrepository = $this->getDoctrine()->getRepository(Product::class);
+
+      $productId = $_GET['productId'];
+      $imageLink = $_GET['imageLink'];
+
+      $myrow = $productsrepository->findOneBy(['id' => $productId]);
+      $myrow->setImageLink($imageLink);
+      $entityManager->flush();
+
+      return $this->json(['ok' => 1]);
+    }
 }
