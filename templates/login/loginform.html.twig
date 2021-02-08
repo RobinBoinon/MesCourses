@@ -1,0 +1,38 @@
+<div class="backgroundMain"></div>
+
+<div class="mainContentContainer">
+    {{ form_start(form, { 'attr': {'autocomplete': 'off'} }) }}
+        <div class="loginform">
+          <div class="formrow">
+              <div class="formcolfield">
+                  {{ form_row(form.login) }}
+              </div>
+              <div class="formcolfield">
+                  {{ form_row(form.password) }}
+              </div>
+              <div class="formcolsubmit">
+                  {{ form_row(form.connect) }}
+              </div>
+          </div>
+        </div>
+    {{ form_end(form) }}
+</div>
+
+{% if error > 0 %}
+    <div class="loginerror">
+        Login/Mot de passe incorrects.
+    </div>
+{% endif %}
+
+
+
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="/js/login.js"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.css">
+{% endblock %}

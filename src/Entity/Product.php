@@ -6,6 +6,7 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -13,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
     /**
+     * @Groups("product")
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -20,16 +22,21 @@ class Product
     private $id;
 
     /**
+     * @Groups("product")
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Groups("product")
      * @ORM\Column(type="string", length=255)
      */
     private $image_link;
 
-    /** @ORM\OneToMany(targetEntity="ListsProducts", mappedBy="product") */
+    /**
+      * @Groups("listsproducts")
+      *@ORM\OneToMany(targetEntity="ListsProducts", mappedBy="product")
+      */
     protected $stockProducts;
 
     public function __construct()

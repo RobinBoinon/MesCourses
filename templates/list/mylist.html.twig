@@ -14,7 +14,7 @@
 <input type="hidden" id="SelectedProductId" value="">
 
 <div class="mainContentContainer">
-    {{ form_start(form) }}
+    {{ form_start(form, { 'attr': {'autocomplete': 'off'} }) }}
         <div class="addform">
           <div class="formrow">
               <div class="formcolfield">
@@ -67,15 +67,25 @@
 
 <div id="content"></div>
 
+<div id="autocompleteresult" class="autocompleteresult"></div>
+<div id="allproduct" data-allproduct="{{ allproducts }}"></div>
+
 
 
 
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="/js/mylist.js"></script>
+    <script>
+      allproduct = '';
+      window.onload = function() {
+        allproduct = $("#allproduct").data('allproduct');
+        $("#form_name").keyup(function() { AutocompleteProduct(); });
+      };
+    </script>
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/mylist.css">
     <link rel="stylesheet" href="/fontawesome/css/all.css">
 {% endblock %}

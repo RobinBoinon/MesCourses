@@ -11,6 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class ListController extends AbstractController
 {
@@ -19,6 +22,10 @@ class ListController extends AbstractController
     */
     public function MyList(Request $request): Response
     {
+      $encoders = [new JsonEncoder()];
+      $normalizers = [new ObjectNormalizer()];
+      $serializer = new Serializer($normalizers, $encoders);
+
         $entityManager = $this->getDoctrine()->getManager();
         $listrepository = $this->getDoctrine()->getRepository(Lists::class);
         $productrepository = $this->getDoctrine()->getRepository(Product::class);
@@ -38,50 +45,93 @@ class ListController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $datas = $form->getData();
-            $name = $datas->getName();
-            $product_temp = new Product();
-            $product_temp = $productrepository->findOneByName(strtolower($name));
-            if(is_null($product_temp)){ //Product doesn't exist in db
-              $product_temp = new Product();
-              $product_temp->setName($name);
-              $entityManager->persist($product_temp);
-              $entityManager->flush();
-
-              $listsproduct = new ListsProducts();
-              $listsproduct->setLists($lists);
-              $listsproduct->setProduct($product_temp);
-              $listsproduct->setQuantity(1);
-              $entityManager->persist($listsproduct);
-              $entityManager->flush();
-            }
-            else{ //Product exists in db
-              $listsproduct = new ListsProducts();
-              $listsproduct = $listsproductsrepository->findOneByCoupleId($lists->getId(),$product_temp->getId());
-              if(is_null($listsproduct)){ //Product is not in the current list yet
-                $listsproduct = new ListsProducts();
-                $listsproduct->setLists($lists);
-                $listsproduct->setProduct($product_temp);
-                $listsproduct->setQuantity(1);
-                $entityManager->persist($listsproduct);
-                $entityManager->flush();
-              }
-              else{ //Product is in the current list already
-                $listsproduct->setQuantity($listsproduct->getQuantity()+1);
-                $entityManager->flush();
-              }
-
-            }
+            $this->AddProductToList($datas, $lists);
         }
 
         //Find current list content
         $listsproducts = $lists->getStockProducts();
+
+        //Find all product in db
+        $allproducts = $productrepository->findAll();
+        $return_array = array();
+        $i=0;
+        foreach($allproducts as $allproduct)
+        {
+            $return_array[$i]['id'] = $allproduct->getId();
+            $return_array[$i]['name'] = $allproduct->getName();
+            $return_array[$i]['imagelink'] = $allproduct->getImageLink();
+            $i++;
+        }
 
         //Rendering
         return $this->render('list/mylist.html.twig', [
             'form' => $form->createView(),
             'lists' => $lists,
             'listsproducts' => $listsproducts,
+            'allproducts' => json_encode($return_array),
         ]);
+    }
+
+    /**
+      * @Route("/addproducttolist", name="addproducttolist")
+    */
+    public function AddProductToListRoute()
+    {
+      $entityManager = $this->getDoctrine()->getManager();
+      $listrepository = $this->getDoctrine()->getRepository(Lists::class);
+      $productrepository = $this->getDoctrine()->getRepository(Product::class);
+
+      //Find current list
+      $lists = $listrepository->findOneBy([], ['id' => 'desc']);
+
+      //Find product
+      $product = $productrepository->findOneBy(['id' => $_GET['productId']]);
+
+      $this->AddProductToList($product, $lists);
+
+      return $this->redirectToRoute('my_list');
+    }
+
+    public function AddProductToList($datas, $lists)
+    {
+      $entityManager = $this->getDoctrine()->getManager();
+      $listrepository = $this->getDoctrine()->getRepository(Lists::class);
+      $productrepository = $this->getDoctrine()->getRepository(Product::class);
+      $listsproductsrepository = $this->getDoctrine()->getRepository(ListsProducts::class);
+
+      $name = $datas->getName();
+      $product_temp = new Product();
+      $product_temp = $productrepository->findOneByName(strtolower($name));
+      if(is_null($product_temp)){ //Product doesn't exist in db
+        $product_temp = new Product();
+        $product_temp->setName(ucfirst($name));
+        $entityManager->persist($product_temp);
+        $entityManager->flush();
+
+        $listsproduct = new ListsProducts();
+        $listsproduct->setLists($lists);
+        $listsproduct->setProduct($product_temp);
+        $listsproduct->setQuantity(1);
+        $entityManager->persist($listsproduct);
+        $entityManager->flush();
+      }
+      else{ //Product exists in db
+        $listsproduct = new ListsProducts();
+        $listsproduct = $listsproductsrepository->findOneByCoupleId($lists->getId(),$product_temp->getId());
+        if(is_null($listsproduct)){ //Product is not in the current list yet
+          $listsproduct = new ListsProducts();
+          $listsproduct->setLists($lists);
+          $listsproduct->setProduct($product_temp);
+          $listsproduct->setQuantity(1);
+          $entityManager->persist($listsproduct);
+          $entityManager->flush();
+        }
+        else{ //Product is in the current list already
+          $listsproduct->setQuantity($listsproduct->getQuantity()+1);
+          $entityManager->flush();
+        }
+
+      }
     }
 
     /**

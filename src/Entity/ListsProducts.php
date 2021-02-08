@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ListsProductsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ListsProductsRepository::class)
@@ -11,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ListsProducts
 {
   /**
+     * @Groups("listsproducts")
      * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Lists", inversedBy="ListsProducts")
      * @ORM\JoinColumn(name="store_id", referencedColumnName="id", nullable=false)
@@ -18,6 +20,7 @@ class ListsProducts
     protected $lists;
 
     /**
+     * @Groups("listsproducts")
      * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="ListsProducts")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
@@ -25,6 +28,7 @@ class ListsProducts
     protected $product;
 
     /**
+     * @Groups("listsproducts")
      * @ORM\Column(type="integer")
      */
     private $quantity;
