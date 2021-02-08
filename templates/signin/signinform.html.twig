@@ -1,6 +1,6 @@
 <div class="backgroundMain"></div>
 
-<div class="mainContentContainer">
+<div class="mainContentContainerSignin">
     {{ form_start(form, { 'attr': {'autocomplete': 'off'} }) }}
         <div class="loginform">
           <div class="formrow">
@@ -10,20 +10,20 @@
               <div class="formcolfield">
                   {{ form_row(form.password) }}
               </div>
+              <div class="formcolfield">
+                  {{ form_row(form.passwordconfirm) }}
+              </div>
               <div class="formcolsubmit">
-                  {{ form_row(form.connect) }}
+                  {{ form_row(form.signin) }}
               </div>
           </div>
         </div>
     {{ form_end(form) }}
     {% if error > 0 %}
         <div class="loginerror">
-            Login/Mot de passe incorrects.
+            Les mots de passes ne correspondent pas.
         </div>
     {% endif %}
-    <div class="signindiv">
-      <span class="signinlink" onclick="SignInHref()">S'inscrire</span>
-    </div>
 </div>
 
 

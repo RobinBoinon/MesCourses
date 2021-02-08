@@ -16,6 +16,7 @@
 form,
 .widthcontent{
   width: 500px;
+  height:287px;
   margin: 0 auto;
 }
 
@@ -28,6 +29,18 @@ form{
   margin: 0 auto;
   background-color: #DAFFDB;
   height: 350px;
+  border-radius: 5px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.mainContentContainerSignin{
+  width: 600px;
+  margin: 0 auto;
+  background-color: #DAFFDB;
+  height: 410px;
   border-radius: 5px;
   position: absolute;
   left: 50%;
@@ -48,7 +61,7 @@ form{
 .formcolsubmit{
   text-align: center;
   display: inline-block;
-  padding-top: 25px;
+  padding-top: 27px;
 }
 
 button[type=submit]{
@@ -107,4 +120,22 @@ input[type=button]{
   width: 400px;
   text-align: center;
   display: inline-block;
+}
+
+.signindiv{
+  text-align: center;
+  color: #328a36;
+}
+
+.signinlink{
+  cursor: pointer;
+}
+
+.signinlink:hover{
+  text-decoration: underline;
+}
+
+.loginerror{
+  text-align: center;
+  color: #ff4949;
 }

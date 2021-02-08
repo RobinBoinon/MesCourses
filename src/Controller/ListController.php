@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\Lists;
 use App\Entity\ListsProducts;
+use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ListController extends AbstractController
 {
@@ -32,7 +34,7 @@ class ListController extends AbstractController
         $listsproductsrepository = $this->getDoctrine()->getRepository(ListsProducts::class);
 
         //Find current list
-        $lists = $listrepository->findOneBy([], ['id' => 'desc']);
+        $lists = $listrepository->findOneBy(['user' => $this->get('session')->get('UserID')], ['id' => 'desc']);
 
         //Form
         $product = new Product();
@@ -141,9 +143,13 @@ class ListController extends AbstractController
     {
       $entityManager = $this->getDoctrine()->getManager();
       $listrepository = $this->getDoctrine()->getRepository(Lists::class);
+      $userrepository = $this->getDoctrine()->getRepository(User::class);
+
+      $user = $userrepository->findOneBy(['id' => $this->get('session')->get('UserID')]);
 
       $new_list = new Lists();
       $new_list->setDate(new \DateTime());
+      $new_list->setUser($user);
       $entityManager->persist($new_list);
       $entityManager->flush();
 

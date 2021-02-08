@@ -27,6 +27,9 @@ class Lists
     /** @ORM\OneToMany(targetEntity="ListsProducts", mappedBy="lists") */
     protected $stockProducts;
 
+    /** @ORM\ManyToOne(targetEntity="User") */
+    protected $user;
+
     public function __construct()
     {
         $this->stockProducts = new ArrayCollection();
@@ -75,6 +78,18 @@ class Lists
                 $stockProduct->setLists(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

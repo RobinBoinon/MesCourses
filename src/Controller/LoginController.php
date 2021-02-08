@@ -45,6 +45,7 @@ class LoginController extends AbstractController
             $user = $userrepository->findOneBy(['login' => $datas->getLogin()]);
             if(!is_null($user)){
               if(hash('sha512', ($user->getHashKey().$datas->getPassword())) == $user->getPassword()){
+                $this->get('session')->set('UserID', $user->getId());
                 return $this->redirectToRoute('my_list');
               }
               else{
